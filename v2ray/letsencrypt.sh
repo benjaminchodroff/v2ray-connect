@@ -1,7 +1,7 @@
 docker create \
   --name=letsencrypt \
   --cap-add=NET_ADMIN \
-  --network connect
+  --network connect \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=UTC \
