@@ -67,6 +67,6 @@ docker rm docker-nginx
 
 docker pull teddysun/v2ray
 docker pull nginx
-docker run -d -p 10000:10000/udp -p 10000:10000 -p 8443:8443 -p 8443:8443/udp --name v2ray --restart=always -v `pwd`:/etc/v2ray teddysun/v2ray
+docker run -d -p 10000:10000 -p 8443:8443 -p 8443:8443/udp --name v2ray --restart=always -v `pwd`:/etc/v2ray teddysun/v2ray
 docker run -d --name docker-nginx -v `pwd`:/usr/share/nginx/html -p 80:80 nginx
 
