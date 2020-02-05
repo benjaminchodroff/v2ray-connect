@@ -42,11 +42,14 @@ sysctl -p
 apt -y upgrade
 apt -y autoremove 
 
-if test -f "key.pem"; then
-    echo "Existing key.pem found, skipping regeneration"
+if test -f "letsencrypt/keys/cert.key"; then
+    echo "Existing key found, skipping regeneration"
 else
-    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 3650 -nodes -subj '/CN=localhost'
+    mkdir letsencrypt
+    ./letsencrypt.sh
 fi
+cp -f nginx.template letsencrypt/nginx/site-confs/default
+cp -f index.html.template letsencrypt/www/index.html
 
 if test -f "config.json"; then
     echo "Existing config found, skipping regeneration"
@@ -55,18 +58,16 @@ else
     UUID1="`uuidgen`"
     UUID2="`uuidgen`"
     cp -f config.json.template config.json
-    cp -f clashx.yaml.template clashx.yaml
-    cp -f shadowrocket.json.template shadowrocket.json
-    sed -i 's/UUID1/'$UUID1'/g' config.json clashx.yaml shadowrocket.json
-    sed -i 's/UUID2/'$UUID2'/g' config.json clashx.yaml shadowrocket.json
+    cp -f clashx.yaml.template letsencrypt/www/clashx.yaml
+    cp -f shadowrocket.json.template letsencrypt/www/shadowrocket.json
+    sed -i 's/UUID1/'$UUID1'/g' config.json letsencrypt/www/clashx.yaml letsencrypt/www/shadowrocket.json
+    sed -i 's/UUID2/'$UUID2'/g' config.json letsencrypt/www/clashx.yaml letsencrypt/www/shadowrocket.json
+    sed -i 's/SERVER/'`hostname`'/g' config.json letsencrypt/www/clashx.yaml letsencrypt/www/shadowrocket.json
 fi
 docker stop v2ray
-docker stop docker-nginx
 docker rm v2ray
-docker rm docker-nginx
 
+docker network create connect
 docker pull teddysun/v2ray
-docker pull nginx
-docker run -d -p 10000:10000 -p 8443:8443 -p 8443:8443/udp --name v2ray --restart=always -v `pwd`:/etc/v2ray teddysun/v2ray
-docker run -d --name docker-nginx -v `pwd`:/usr/share/nginx/html -p 80:80 nginx
+docker run -d --network connect -p 10000:10000 -p 8443:8443 -p 8443:8443/udp --name v2ray --restart=always -v `pwd`:/etc/v2ray teddysun/v2ray
 

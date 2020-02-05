@@ -44,8 +44,8 @@
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/v2ray/cert.pem",
-              "keyFile": "/etc/v2ray/key.pem"
+              "certificateFile": "/etc/v2ray/letsencrypt/keys/cert.crt",
+              "keyFile": "/etc/v2ray/letsencrypt/keys/cert.key"
             }
           ]
         },
@@ -68,7 +68,7 @@
       "port": 10000,
       "protocol": "dokodemo-door",
       "settings": {
-        "address": "127.0.0.1"
+        "address": "0.0.0.0"
       },
       "tag": "api"
     }

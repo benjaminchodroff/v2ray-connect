@@ -25,10 +25,8 @@ secret: ''
 # don't uncomment unless you know what you're doing
 # external-ui: folder
 Proxy:
-    - { name: 'Singapore Aliyun V2Ray', type: vmess, server: connect010.benchodroff.com, port: 8443, uuid: "UUID1", alterId: 64, cipher: auto, network: ws, ws-path: /blog, tls: true, skip-cert-verify: true }
-    - { name: 'Singapore Aliyun CloudFlare V2Ray', type: vmess, server: cf-connect010.benchodroff.com, port: 8443, uuid: "UUID2", alterId: 64, cipher: auto, network: ws, ws-path: /blog, tls: true }
-    - { name: 'HK AWS V2Ray', type: vmess, server: connect2.benchodroff.com, port: 8443, uuid: "UUID1", alterId: 64, cipher: auto, network: ws, ws-path: /blog, tls: true, skip-cert-verify: true }
-    - { name: 'HK AWS CloudFlare V2Ray', type: vmess, server: cf-connect2.benchodroff.com, port: 8443, uuid: "UUID2", alterId: 64, cipher: auto, network: ws, ws-path: /blog, tls: true }
+    - { name: 'SERVER V2Ray', type: vmess, server: SERVER, port: 443, uuid: "UUID1", alterId: 64, cipher: auto, network: ws, ws-path: /blog, tls: true }
+    - { name: 'SERVER CloudFlare V2Ray', type: vmess, server: cf-SERVER, port: 443, uuid: "UUID2", alterId: 64, cipher: auto, network: ws, ws-path: /blog, tls: true }
 
 
 Proxy Group:
@@ -36,10 +34,8 @@ Proxy Group:
   name: Proxy
   type: select
   proxies:
-    - 'Singapore Aliyun V2Ray'
-    - 'Singapore Aliyun CloudFlare V2Ray'
-    - 'HK AWS V2Ray'
-    - 'HK AWS CloudFlare V2Ray'
+    - 'SERVER V2Ray'
+    - 'SERVER CloudFlare V2Ray'
 
 -
   name: Domestic
