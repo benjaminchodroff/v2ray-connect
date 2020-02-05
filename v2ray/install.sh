@@ -42,6 +42,7 @@ sysctl -p
 apt -y upgrade
 apt -y autoremove 
 
+docker network create connect
 if test -f "letsencrypt/keys/cert.key"; then
     echo "Existing key found, skipping regeneration"
 else
@@ -67,7 +68,6 @@ fi
 docker stop v2ray
 docker rm v2ray
 
-docker network create connect
 docker pull teddysun/v2ray
 docker run -d --network connect -p 10000:10000 -p 8443:8443 -p 8443:8443/udp --name v2ray --restart=always -v `pwd`:/etc/v2ray teddysun/v2ray
 
