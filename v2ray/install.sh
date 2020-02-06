@@ -60,10 +60,10 @@ else
     UUID2="`uuidgen`"
     cp -f config.json.template config.json
     cp -f clashx.yaml.template letsencrypt/www/clashx.yaml
-    cp -f shadowrocket.json.template letsencrypt/www/shadowrocket.json
-    sed -i 's/UUID1/'$UUID1'/g' config.json letsencrypt/www/clashx.yaml letsencrypt/www/shadowrocket.json
-    sed -i 's/UUID2/'$UUID2'/g' config.json letsencrypt/www/clashx.yaml letsencrypt/www/shadowrocket.json
-    sed -i 's/SERVER/'`hostname`'/g' config.json letsencrypt/www/clashx.yaml letsencrypt/www/shadowrocket.json
+    sed -i 's/UUID1/'$UUID1'/g' config.json sr.template letsencrypt/www/clashx.yaml 
+    sed -i 's/UUID2/'$UUID2'/g' config.json sr.template letsencrypt/www/clashx.yaml
+    sed -i 's/SERVER/'`hostname`'/g' config.json sr.template letsencrypt/www/clashx.yaml
+    ./sr.template > letsencrypt/www/sr
 fi
 docker stop v2ray
 docker rm v2ray

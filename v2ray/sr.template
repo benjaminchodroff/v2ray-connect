@@ -1,0 +1,20 @@
+uuid1="UUID1"
+uuid2="UUID2"
+server="SERVER"
+port=443
+
+vmess1=$( \
+    echo 'vmess://' && \
+    echo "auto:$uuid1@$server:$port"|base64 -w0 && \
+    echo "?remark=$server%20V2Ray&path=/blog&obfs=websocket&aid=64&tls=1&peer=&cert=&tfo=1" \
+    )
+
+vmess2=$( \
+    echo 'vmess://' && \
+    echo "auto:$uuid2@cf-$server:$port"|base64 -w0 && \
+    echo "?remark=$server%20CloudFlare%20V2Ray&path=/blog&obfs=websocket&aid=64&tls=1&peer=&cert=&tfo=1" \
+    )
+
+sr=`echo -e "$vmess1\n$vmess2" | base64 -w0`
+echo $sr
+
